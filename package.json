@@ -12,7 +12,6 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.2",
-    "youtube-search-without-api-key": "^1.0.7",
     "ytdl-core": "^4.10.1",
     "ytsr": "^3.6.0"
   }
