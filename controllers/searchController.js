@@ -1,14 +1,15 @@
-const yt = require('youtube-search-without-api-key');
+const ytsr = require('ytsr');
 
 const search_videos = async (req, res) => {
-  const formatQuery = query => query.toString().replaceAll('%20', ' ').replaceAll('+', ' ');
   const query = req.params.query;
-
   if (!query) return res.send('Empty query.');
 
   try {
-    const formattedQuery = formatQuery(query);
-    const videosArray = await yt.search(formattedQuery);
+    let searchResults = await ytsr(query, { limit: 15 });
+
+    const isVideo = item => item.type == 'video';
+    const videosArray = searchResults.items.filter(isVideo);
+
     res.status(200).send(videosArray);
   } catch (error) {
     console.log(error);
