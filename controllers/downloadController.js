@@ -7,7 +7,10 @@ const download_video = async (req, res) => {
   try {
     const audio = await ytdl(videoURL, { quality: 140 });
 
-    audio.once('progress', (chunk, loaded, total) => res.set('content-length', total)).pipe(res);
+    const getAudioSize = () => audio.once('progress', (chunk, loaded, total) => total);
+    res.set('content-length', getAudioSize());
+
+    await audio.pipe(res);
   } catch (error) {
     console.log(error);
     res.status(400).send('Not found.');
