@@ -6,16 +6,8 @@ const download_video = async (req, res) => {
 
   try {
     const audio = await ytdl(videoURL, { quality: 140 });
-    let isHeaderSetted = false;
 
-    audio
-      .on('progress', (chunk, loaded, total) => {
-        if (!isHeaderSetted) {
-          res.set('content-length', total);
-          isHeaderSetted = true;
-        }
-      })
-      .pipe(res);
+    audio.once('progress', (chunk, loaded, total) => res.set('content-length', total)).pipe(res);
   } catch (error) {
     console.log(error);
     res.status(400).send('Not found.');
