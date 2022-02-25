@@ -1,25 +1,23 @@
-const formatOutputTitle = title => {
-  return title.toString().replace(/[^\p{L}\p{N}\p{P}\p{Z}^$\n]/gu, '');
+const normalizeString = title => {
+  return title
+    .toString()
+    .replace(/[^\p{L}\p{N}\p{P}\p{Z}^$\n]/gu, '')
+    .trim();
+};
+
+const removeAuthorNameFromTitle = title => {
+  return title.replace(`${item.author.name}`, '').replace(' - ', ' ').replace(',', '');
 };
 
 const formatTitle = item => {
-  item = { ...item, title: formatOutputTitle(item.title) };
+  const authorName = item.author.name;
+  const title = normalizeString(item.title);
 
-  const isThereSpaceBeforeTitle = title => title[0] == ' ';
-  const removeSpaceBeforeTitle = title => title.substring(1);
+  const isAuthorNameInTitle = title.includes(authorName);
 
-  const isAuthorNameInTitle = item.title.indexOf(item.author.name) > -1;
-  const removeAuthorNameFromTitle = title => {
-    return title.replace(`${item.author.name}`, '').replace(' - ', ' ').replace(',', '');
-  };
+  if (isAuthorNameInTitle) title = removeAuthorNameFromTitle(title);
 
-  let formattedTitle = isAuthorNameInTitle ? removeAuthorNameFromTitle(item.title) : item.title;
-
-  if (isThereSpaceBeforeTitle(formattedTitle)) {
-    formattedTitle = removeSpaceBeforeTitle(formattedTitle);
-  }
-
-  return formattedTitle;
+  return title;
 };
 
 module.exports = { formatTitle };
