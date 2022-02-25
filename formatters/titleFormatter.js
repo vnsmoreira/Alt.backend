@@ -5,17 +5,17 @@ const normalizeString = title => {
     .trim();
 };
 
-const removeAuthorNameFromTitle = title => {
-  return title.replace(`${item.author.name}`, '').replace(' - ', ' ').replace(',', '');
+const removeAuthorNameFromTitle = (title, authorName) => {
+  return title.replace(authorName, '').replace(' - ', ' ').replace(',', '');
 };
 
 const formatTitle = item => {
+  let title = normalizeString(item.title);
   const authorName = item.author.name;
-  const title = normalizeString(item.title);
 
   const isAuthorNameInTitle = title.includes(authorName);
 
-  if (isAuthorNameInTitle) title = removeAuthorNameFromTitle(title);
+  if (isAuthorNameInTitle) title = removeAuthorNameFromTitle(title,authorName);
 
   return title;
 };
