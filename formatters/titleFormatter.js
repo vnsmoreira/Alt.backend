@@ -1,8 +1,5 @@
 const normalizeString = title => {
-  return title
-    .toString()
-    .replace(/[^\p{L}\p{N}\p{P}\p{Z}^$\n]/gu, '')
-    .trim();
+  return title.toString().replace(/[^\p{L}\p{N}\p{P}\p{Z}^$\n]/gu, '');
 };
 
 const removeAuthorNameFromTitle = (title, authorName) => {
@@ -15,9 +12,9 @@ const formatTitle = item => {
 
   const isAuthorNameInTitle = title.includes(authorName);
 
-  if (isAuthorNameInTitle) title = removeAuthorNameFromTitle(title,authorName);
+  if (isAuthorNameInTitle) title = removeAuthorNameFromTitle(title, authorName);
 
-  return title;
+  return title.trim();
 };
 
 module.exports = { formatTitle };
