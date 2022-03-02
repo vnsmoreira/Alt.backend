@@ -14,9 +14,8 @@ app.use('/search', searchRoutes);
 app.use('/download', downloadRoutes);
 app.use('/info', infoRoutes);
 
-const ip = '192.168.15.127';
 const port = process.env.PORT || 3000;
 
-app.listen(port, ip, () => {
-  console.info(`Running on: ${ip}:${port}`);
+app.listen(port, () => {
+  console.info(`Running on port:${port}`);
 });
